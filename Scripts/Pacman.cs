@@ -10,6 +10,7 @@ public class Pacman : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
     private Movement movement;
     private new Collider2D collider;
+    
 
     private void Awake () {
         // Get component from the object
@@ -54,6 +55,7 @@ public class Pacman : MonoBehaviour {
 
     public void DeathSequence()
     {
+        
         this.enabled = false;
         this.spriteRenderer.enabled = false;
         GetComponent<AnimatedSprites>().loop = false;

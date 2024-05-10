@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour {
     public Text livesText;
     public Text scoreText;
 
+    //Audio
+    [SerializeField] private AudioSource frightenedStateEffect;
+    [SerializeField] private AudioSource gameOverSoundEffect;
+    [SerializeField] private AudioSource deathSoundEffect;
 
     //First method called when the game starts
     private void Start() {
@@ -72,6 +76,7 @@ public class GameManager : MonoBehaviour {
      // Handles when player loses the game.
     private void GameOver() {
         this.gameOverText.enabled = true;
+        this.gameOverSoundEffect.Play();
 
         for (int i = 0; i < this.ghosts.Length; i++) {
             // deactiveate the ghosts
@@ -112,6 +117,8 @@ public class GameManager : MonoBehaviour {
    // method that handles a player being eaten by ghosts.
     public void PacmanEaten() {
 
+        //play death audio
+        this.deathSoundEffect.Play();
         //start death animation
         this.pacman.DeathSequence();
 
@@ -143,6 +150,7 @@ public class GameManager : MonoBehaviour {
 
 
   public void PowerPelletEaten(PowerPellet pellet) {
+
         //tell all our ghost to become frightened
         for (int i = 0; i < this.ghosts.Length; i++)
         {
@@ -151,6 +159,8 @@ public class GameManager : MonoBehaviour {
 
         PelletEaten(pellet);
         
+        this.frightenedStateEffect.Play();
+
         //if one is running cancel it and reinvoke (lets us stack ghosts)
         CancelInvoke();
         Invoke(nameof(ResetGhostMultiplier), pellet.duration);
